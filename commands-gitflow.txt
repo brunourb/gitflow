@@ -1,0 +1,162 @@
+bruno@gambit-linux ~ $ docker run -it -v /tmp:/tmp --name server-git -h server-git ubuntu:latest /bin/bash
+root@server-git:/# apt update && apt install vim git-core git-flow -y
+root@server-git:/# git config --global user.email "you@example.com"
+root@server-git:/# git config --global user.name "Your Name"
+root@server-git:~# git clone https://github.com/<SEU_NOME>/gitflow.git
+root@server-git:/# cd gitflow
+Cloning into 'gitflow'...
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+Checking connectivity... done.
+root@server-git:~# cd gitflow/
+root@server-git:/gitflow# git flow init
+root@server-git:~/gitflow# git log --oneline
+7733ea0 Initial commit
+root@server-git:/gitflow# git checkout -b hotfix-1.2.1 master
+Switched to a new branch 'hotfix-1.2.1'
+root@server-git:/gitflow# cp LICENSE LICENSE-hotfix-1.2.1
+root@server-git:/gitflow# git add LICENSE-hotfix-1.2.1 
+root@server-git:/gitflow# git commit -a -m "Bumped version number to 1.2.1"
+[hotfix-1.2.1 f63ba26] Bumped version number to 1.2.1
+ 1 file changed, 201 insertions(+)
+ create mode 100644 LICENSE-hotfix-1.2.1
+root@server-git:/gitflow# git commit -m "Fixed severe production problem"
+On branch hotfix-1.2.1
+nothing to commit, working directory clean
+root@server-git:/gitflow# 
+root@server-git:/gitflow# git checkout master
+Switched to branch 'master'
+Your branch is up-to-date with 'origin/master'.
+root@server-git:/gitflow# git merge --no-ff release-1.2
+merge: release-1.2 - not something we can merge
+root@server-git:/gitflow# cd ..
+root@server-git:/# rm -rf gitflow/
+root@server-git:/# git clone https://github.com/brunourb/gitflow.git
+Cloning into 'gitflow'...
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+Checking connectivity... done.
+root@server-git:/# cd gitflow/
+root@server-git:/gitflow# git flow init
+
+Which branch should be used for bringing forth production releases?
+   - master
+Branch name for production releases: [master] 
+Branch name for "next release" development: [develop] 
+
+How to name your supporting branch prefixes?
+Feature branches? [feature/] 
+Bugfix branches? [bugfix/] 
+Release branches? [release/] 
+Hotfix branches? [hotfix/] 
+Support branches? [support/] 
+Version tag prefix? [] 
+Hooks and filters directory? [/gitflow/.git/hooks] 
+root@server-git:/gitflow# git log --oneline
+7733ea0 Initial commit
+root@server-git:/gitflow# git checkout -b myfeature develop
+Switched to a new branch 'myfeature'
+root@server-git:/gitflow# git checkout develop
+Switched to branch 'develop'
+root@server-git:/gitflow# git merge --no-ff myfeature
+Already up-to-date.
+root@server-git:/gitflow# git branch -d myfeature
+Deleted branch myfeature (was 7733ea0).
+root@server-git:/gitflow# git push origin develop
+Username for 'https://github.com': brunourb 
+Password for 'https://brunourb@github.com': 
+Total 0 (delta 0), reused 0 (delta 0)
+To https://github.com/brunourb/gitflow.git
+ * [new branch]      develop -> develop
+root@server-git:/gitflow# git checkout -b release-1.2 develop
+Switched to a new branch 'release-1.2'
+root@server-git:/gitflow# cp LICENSE LICENSE-hotfix-1.2
+root@server-git:/gitflow# git add LICENSE-hotfix-1.2 
+root@server-git:/gitflow# git commit -a -m "Bumped version number to 1.2"
+[release-1.2 830c2dd] Bumped version number to 1.2
+ 1 file changed, 201 insertions(+)
+ create mode 100644 LICENSE-hotfix-1.2
+root@server-git:/gitflow# ls -l
+total 24
+-rw-r--r-- 1 root root 11357 Dec 16 05:50 LICENSE
+-rw-r--r-- 1 root root 11357 Dec 16 05:52 LICENSE-hotfix-1.2
+root@server-git:/gitflow# git checkout master
+Switched to branch 'master'
+Your branch is up-to-date with 'origin/master'.
+root@server-git:/gitflow# git merge --no-ff release-1.2
+Merge made by the 'recursive' strategy.
+ LICENSE-hotfix-1.2 | 201 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 201 insertions(+)
+ create mode 100644 LICENSE-hotfix-1.2
+root@server-git:/gitflow# git tag -a 1.2
+fatal: no tag message?
+root@server-git:/gitflow# git checkout develop
+Switched to branch 'develop'
+root@server-git:/gitflow# git merge --no-ff release-1.2
+Merge made by the 'recursive' strategy.
+ LICENSE-hotfix-1.2 | 201 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 201 insertions(+)
+ create mode 100644 LICENSE-hotfix-1.2
+root@server-git:/gitflow# git branch -d release-1.2
+Deleted branch release-1.2 (was 830c2dd).
+root@server-git:/gitflow# git checkout -b hotfix-1.2.1 master
+Switched to a new branch 'hotfix-1.2.1'
+root@server-git:/gitflow# cp LICENSE LICENSE-hotfix-1.2.1
+root@server-git:/gitflow# git add LICENSE-hotfix-1.2.1 
+root@server-git:/gitflow# git add LICENSE-hotfix-1.2.1 
+root@server-git:/gitflow# ll
+total 48
+drwxr-xr-x 3 root root  4096 Dec 16 05:53 ./
+drwxr-xr-x 1 root root  4096 Dec 16 05:50 ../
+drwxr-xr-x 8 root root  4096 Dec 16 05:53 .git/
+-rw-r--r-- 1 root root 11357 Dec 16 05:50 LICENSE
+-rw-r--r-- 1 root root 11357 Dec 16 05:53 LICENSE-hotfix-1.2
+-rw-r--r-- 1 root root 11357 Dec 16 05:53 LICENSE-hotfix-1.2.1
+root@server-git:/gitflow# git commit -a -m "Bumped version number to 1.2.1"
+[hotfix-1.2.1 dc4a1f5] Bumped version number to 1.2.1
+ 1 file changed, 201 insertions(+)
+ create mode 100644 LICENSE-hotfix-1.2.1
+root@server-git:/gitflow# git commit -m "Fixed severe production problem"
+On branch hotfix-1.2.1
+nothing to commit, working directory clean
+root@server-git:/gitflow# git checkout master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+root@server-git:/gitflow# git merge --no-ff hotfix-1.2.1
+Merge made by the 'recursive' strategy.
+ LICENSE-hotfix-1.2.1 | 201 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 201 insertions(+)
+ create mode 100644 LICENSE-hotfix-1.2.1
+root@server-git:/gitflow# git tag -a 1.2.1
+fatal: no tag message?
+root@server-git:/gitflow# git checkout develop
+Switched to branch 'develop'
+root@server-git:/gitflow# git merge --no-ff hotfix-1.2.1
+Merge made by the 'recursive' strategy.
+ LICENSE-hotfix-1.2.1 | 201 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 201 insertions(+)
+ create mode 100644 LICENSE-hotfix-1.2.1
+root@server-git:/gitflow# git branch -d hotfix-1.2.1
+Deleted branch hotfix-1.2.1 (was dc4a1f5).
+root@server-git:/gitflow# git log --decorate --graph --oneline
+*   9714469 (HEAD -> develop) Merge branch 'hotfix-1.2.1' into develop
+|\  
+| * dc4a1f5 Bumped version number to 1.2.1
+| *   3afdaa2 Merge branch 'release-1.2'
+| |\  
+* | \   08359b1 Merge branch 'release-1.2' into develop
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * 830c2dd Bumped version number to 1.2
+|/  
+* 7733ea0 (origin/master, origin/develop, origin/HEAD) Initial commit
+root@server-git:/gitflow# cd ..
+root@server-git:/# cp -R gitflow/ /tmp/
+root@server-git:/# 
