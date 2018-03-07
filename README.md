@@ -1,2 +1,2 @@
 # gitflow
-Example of gitflow step-by-stpe in command line.
+Example of gitflow step by step in command line.
